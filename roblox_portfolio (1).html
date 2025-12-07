@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THEKING_1139 | Elite Roblox Developer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Mesh Background */
+        .mesh-gradient {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background: 
+                radial-gradient(at 0% 0%, rgba(121, 40, 202, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(255, 0, 128, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 112, 243, 0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(121, 40, 202, 0.3) 0px, transparent 50%);
+            filter: blur(100px);
+            animation: meshMove 15s ease infinite alternate;
+        }
+
+        @keyframes meshMove {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.1) rotate(5deg); }
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='4' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.025;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        /* Floating Nav */
+        nav {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            padding: 14px 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-item {
+            padding: 12px 28px;
+            border-radius: 50px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            animation: fadeSlideUp 0.8s ease-out;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.9); }
+        }
+
+        .hero-title {
+            font-size: clamp(60px, 12vw, 160px);
+            font-weight: 700;
+            line-height: 0.95;
+            margin-bottom: 30px;
+            letter-spacing: -0.05em;
+            animation: fadeSlideUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fff 0%, #667eea 30%, #764ba2 60%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 2.5vw, 26px);
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 800px;
+            margin: 0 auto 60px;
+            line-height: 1.6;
+            animation: fadeSlideUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeSlideUp 0.8s ease-out 0.6s backwards;
+        }
+
+        @keyframes fadeSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+        }
+
+        .btn {
+            padding: 20px 48px;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-4px) scale(1.02);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            top: 10%;
+            left: 5%;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #ff0080, #ff8c00);
+            bottom: 10%;
+            right: 5%;
+            animation-delay: 5s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #0070f3, #00c9ff);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -80px) scale(1.1); }
+            66% { transform: translate(-30px, 50px) scale(0.9); }
+        }
+
+        /* Section */
+        .section {
+            padding: 140px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 28px;
+        }
+
+        .section-title {
+            font-size: clamp(40px, 7vw, 80px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: -0.03em;
+        }
+
+        .section-subtitle {
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(520px, 1fr));
+            gap: 32px;
+        }
+
+        .portfolio-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            cursor: pointer;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(102, 126, 234, 0.08), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 0;
+        }
+
+        .portfolio-card:hover::before {
+            opacity: 1;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-12px);
+            border-color: rgba(102, 126, 234, 0.4);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Video Preview for Scripting */
+        .portfolio-media {
+            position: relative;
+            height: 320px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .video-placeholder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .video-icon {
+            font-size: 80px;
+            opacity: 0.6;
+            animation: videoGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes videoGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        .play-button {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            transition: all 0.3s;
+        }
+
+        .portfolio-card:hover .play-button {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Image Preview for UI Design */
+        .image-placeholder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 100%);
+        }
+
+        .image-icon {
+            font-size: 100px;
+            opacity: 0.5;
+        }
+
+        .ui-frame {
+            position: absolute;
+            inset: 40px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            pointer-events: none;
+        }
+
+        .ui-frame::before,
+        .ui-frame::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(102, 126, 234, 0.5);
+        }
+
+        .ui-frame::before {
+            top: -3px;
+            left: -3px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .ui-frame::after {
+            bottom: -3px;
+            right: -3px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Portfolio Content */
+        .portfolio-content {
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-category {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(102, 126, 234, 0.15);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-title {
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .portfolio-desc {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            font-size: 16px;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tag {
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Contact Section */
+        .contact-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s;
+        }
+
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .info-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .info-card:nth-child(2) .info-icon {
+            animation-delay: 0.3s;
+        }
+
+        .info-card:nth-child(3) .info-icon {
+            animation-delay: 0.6s;
+        }
+
+        .info-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #667eea;
+            word-break: break-word;
+        }
+
+        /* Enhanced Form */
+        .form-container {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 40px;
+            padding: 70px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .form-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .form-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+            margin-bottom: 28px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 12px;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 20px 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            color: #fff;
+            font-size: 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23667eea' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            padding-right: 50px;
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 18px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Space Grotesk', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-submit::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .form-submit:hover::before {
+            opacity: 1;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.5);
+        }
+
+        .form-submit:active {
+            transform: translateY(-2px);
+        }
+
+        .form-submit span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-message {
+            margin-top: 24px;
+            padding: 20px 28px;
+            border-radius: 18px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #10b981;
+        }
+
+        .form-message.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        /* Footer */
+        footer {
+            padding: 100px 0 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 140px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 80px;
+            margin-bottom: 80px;
+        }
+
+        .footer-brand {
+            max-width: 450px;
+        }
+
+        .footer-logo {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-desc {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.8;
+        }
+
+        .footer-section h4 {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .footer-link:hover {
+            color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-copy {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background: rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.3);
+            color: #667eea;
+            transform: translateY(-4px);
+        }
+
+        @media (max-width: 1200px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: span 1;
+            }
+
+            .contact-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                padding: 40px 28px;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 30px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-gradient"></div>
+    <div class="grain"></div>
+
+    <nav>
+        <a href="#scripting" class="nav-item">Scripting</a>
+        <a href="#ui-design" class="nav-item">UI Design</a>
+        <a href="#contact" class="nav-item active">Hire Me</a>
+    </nav>
+
+    <div class="container">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+            
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="status-dot"></span>
+                    Available for Commissions
+                </div>
+                <h1 class="hero-title">
+                    <span class="gradient-text">THEKING_1139</span><br>
+                    Roblox Developer
+                </h1>
+                <p class="hero-subtitle">
+                    Elite scripter & UI designer crafting cutting-edge game experiences with advanced Lua systems and stunning modern interfaces
+                </p>
+                <div class="hero-cta">
+                    <a href="#scripting" class="btn btn-primary">
+                        <span>View Portfolio</span>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span>Hire Me Now</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scripting Portfolio -->
+        <section id="scripting" class="section">
+            <div class="section-header">
+                <div class="section-tag">⚡ SCRIPTING PORTFOLIO</div>
+                <h2 class="section-title">Advanced Lua Development</h2>
+                <p class="section-subtitle">Professional game systems built with clean architecture, optimized performance, and scalable code</p>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="video-placeholder">
+                            <div class="video-icon">🎮</div>
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Combat System</span>
+                        <h3 class="portfolio-title">Advanced Combat Framework</h3>
+                        <p class="portfolio-desc">Professional combat system featuring precise hitbox detection, fluid combo mechanics, weapon variety, and seamless animation integration. Built with anti-exploit measures and full client-server validation for competitive multiplayer environments.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Hitbox Detection</span>
+                            <span class="tag">Combo System</span>
+                            <span class="tag">Anti-Exploit</span>
+                            <span class="tag">Animation Sync</span>
+                            <span class="tag">Damage Calculation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="video-placeholder">
+                            <div class="video-icon">💾</div>
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Data System</span>
+                        <h3 class="portfolio-title">Enterprise DataStore Manager</h3>
+                        <p class="portfolio-desc">Robust data persistence system with auto-save, session locking, data migration, and backup systems. Handles thousands of players simultaneously with optimized save intervals and error recovery mechanisms.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Auto-Save</span>
+                            <span class="tag">Session Lock</span>
+                            <span class="tag">Migration</span>
+                            <span class="tag">Backups</span>
+                            <span class="tag">Error Recovery</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="video-placeholder">
+                            <div class="video-icon">🎒</div>
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Inventory</span>
+                        <h3 class="portfolio-title">Complete Inventory System</h3>
+                        <p class="portfolio-desc">Full-featured inventory with drag-drop functionality, trading system, crafting mechanics, and item rarity systems. Includes weight management, durability tracking, and server-side validation to prevent exploits.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Trading</span>
+                            <span class="tag">Crafting</span>
+                            <span class="tag">Item Stacking</span>
+                            <span class="tag">Rarity System</span>
+                            <span class="tag">Durability</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="video-placeholder">
+                            <div class="video-icon">⚙️</div>
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Admin Tools</span>
+                        <h3 class="portfolio-title">Professional Admin System</h3>
+                        <p class="portfolio-desc">Comprehensive admin panel with 100+ commands, role-based permissions, detailed logging system, and ban management. Features command suggestions, execution history, and a clean modern interface.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">100+ Commands</span>
+                            <span class="tag">Permissions</span>
+                            <span class="tag">Logging</span>
+                            <span class="tag">Ban System</span>
+                            <span class="tag">Audit Trail</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="video-placeholder">
+                            <div class="video-icon">🎮</div>
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Progression</span>
+                        <h3 class="portfolio-title">RPG Progression Engine</h3>
+                        <p class="portfolio-desc">Complete RPG system with skill trees, achievements, quest management, stat allocation, and prestige mechanics. Features dynamic difficulty scaling, reward multipliers, and comprehensive player progression tracking.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Skill Trees</span>
+                            <span class="tag">Quest System</span>
+                            <span class="tag">Achievements</span>
+                            <span class="tag">Stats</span>
+                            <span class="tag">Prestige</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="video-placeholder">
+                            <div class="video-icon">🏆</div>
+                            <div class="play-button">▶</div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Multiplayer</span>
+                        <h3 class="portfolio-title">Matchmaking System</h3>
+                        <p class="portfolio-desc">Skill-based matchmaking with party support, ELO rating system, ranked modes, and automated server allocation. Includes queue management, player balancing algorithms, and cross-server communication.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">ELO Rating</span>
+                            <span class="tag">Party System</span>
+                            <span class="tag">Ranked Modes</span>
+                            <span class="tag">Auto-Balance</span>
+                            <span class="tag">Queue System</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- UI Design Portfolio -->
+        <section id="ui-design" class="section">
+            <div class="section-header">
+                <div class="section-tag">🎨 UI DESIGN PORTFOLIO</div>
+                <h2 class="section-title">Modern Interface Design</h2>
+                <p class="section-subtitle">Pixel-perfect designs with buttery-smooth animations and intuitive user experiences</p>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="image-placeholder">
+                            <div class="image-icon">🏠</div>
+                            <div class="ui-frame"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Main Menu</span>
+                        <h3 class="portfolio-title">Premium Main Menu Interface</h3>
+                        <p class="portfolio-desc">Stunning main menu featuring parallax effects, smooth page transitions, integrated news feed, and fully responsive design. Includes animated buttons, particle effects, dynamic backgrounds, and seamless navigation between sections.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Parallax Effects</span>
+                            <span class="tag">Page Transitions</span>
+                            <span class="tag">Responsive</span>
+                            <span class="tag">Particle FX</span>
+                            <span class="tag">News Feed</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="image-placeholder">
+                            <div class="image-icon">📊</div>
+                            <div class="ui-frame"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">HUD</span>
+                        <h3 class="portfolio-title">Minimalist Game HUD</h3>
+                        <p class="portfolio-desc">Clean, unobtrusive HUD design with animated health bars, ammo counters, interactive minimap, and status effect displays. Features smooth value transitions, customizable color schemes, and adaptive layouts for different screen sizes.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Health Bars</span>
+                            <span class="tag">Minimap</span>
+                            <span class="tag">Status Effects</span>
+                            <span class="tag">Smooth Animations</span>
+                            <span class="tag">Adaptive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="image-placeholder">
+                            <div class="image-icon">🛍️</div>
+                            <div class="ui-frame"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Shop</span>
+                        <h3 class="portfolio-title">Modern Shop Interface</h3>
+                        <p class="portfolio-desc">Beautiful shop UI with category filtering, advanced search, 3D item previews, and satisfying purchase animations. Supports multiple currencies, limited-time offers, wishlists, and detailed item information panels.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Category Filters</span>
+                            <span class="tag">Search</span>
+                            <span class="tag">3D Preview</span>
+                            <span class="tag">Multi-Currency</span>
+                            <span class="tag">Wishlist</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="image-placeholder">
+                            <div class="image-icon">📱</div>
+                            <div class="ui-frame"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Mobile UI</span>
+                        <h3 class="portfolio-title">Optimized Mobile Controls</h3>
+                        <p class="portfolio-desc">Responsive mobile interface with virtual joystick, context-sensitive action buttons, and optimized touch areas. Features haptic feedback integration, gesture controls, and adaptive button positioning.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Virtual Joystick</span>
+                            <span class="tag">Touch Controls</span>
+                            <span class="tag">Gestures</span>
+                            <span class="tag">Haptic</span>
+                            <span class="tag">Adaptive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="image-placeholder">
+                            <div class="image-icon">🎯</div>
+                            <div class="ui-frame"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Dashboard</span>
+                        <h3 class="portfolio-title">Player Analytics Dashboard</h3>
+                        <p class="portfolio-desc">Comprehensive dashboard with animated statistics, progress visualizations, achievement showcases, and leaderboard integration. Features real-time data updates, interactive charts, and detailed performance metrics.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Animated Charts</span>
+                            <span class="tag">Stats Tracking</span>
+                            <span class="tag">Leaderboards</span>
+                            <span class="tag">Achievements</span>
+                            <span class="tag">Real-time</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        <div class="image-placeholder">
+                            <div class="image-icon">💬</div>
+                            <div class="ui-frame"></div>
+                        </div>
+                    </div>
+                    <div class="portfolio-content">
+                        <span class="portfolio-category">Chat System</span>
+                        <h3 class="portfolio-title">Modern Chat Interface</h3>
+                        <p class="portfolio-desc">Feature-rich chat system with multiple channels, emoji support, player mentions, and animated chat bubbles. Includes message formatting, chat filters, whisper functionality, and customizable themes.</p>
+                        <div class="portfolio-tags">
+                            <span class="tag">Channels</span>
+                            <span class="tag">Emojis</span>
+                            <span class="tag">Mentions</span>
+                            <span class="tag">Formatting</span>
+                            <span class="tag">Themes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="section-header">
+                <div class="section-tag">💼 LET'S WORK TOGETHER</div>
+                <h2 class="section-title">Hire Me</h2>
+                <p class="section-subtitle">Ready to bring your game vision to life with professional development</p>
+            </div>
+
+            <div class="contact-wrapper">
+                <div class="contact-info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">📧</div>
+                        <div class="info-label">Email</div>
+                        <div class="info-value">shrinivasdhangar62@gmail.com</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">💬</div>
+                        <div class="info-label">Discord</div>
+                        <div class="info-value">theking_1139_48793</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">🎮</div>
+                        <div class="info-label">Roblox</div>
+                        <div class="info-value">THEKING_1139</div>
+                    </div>
+                </div>
+
+                <div class="form-container">
+                    <div class="form-header">
+                        <h3 class="form-title">Start Your Project</h3>
+                        <p class="form-subtitle">Fill out the form below and I'll get back to you within 24 hours</p>
+                    </div>
+
+                    <form id="contactForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Your Name *</label>
+                                <input type="text" class="form-input" name="name" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address *</label>
+                                <input type="email" class="form-input" name="email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Project Type *</label>
+                                <select class="form-select" name="project_type" required>
+                                    <option value="">Select Service</option>
+                                    <option value="scripting">Scripting Only</option>
+                                    <option value="ui_design">UI Design Only</option>
+                                    <option value="both">Scripting + UI Design</option>
+                                    <option value="full_game">Full Game Development</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Budget Range</label>
+                                <select class="form-select" name="budget">
+                                    <option value="">Select Budget</option>
+                                    <option value="under_500">Under $500</option>
+                                    <option value="500_1000">$500 - $1,000</option>
+                                    <option value="1000_2500">$1,000 - $2,500</option>
+                                    <option value="2500_5000">$2,500 - $5,000</option>
+                                    <option value="over_5000">$5,000+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group full">
+                            <label class="form-label">Project Timeline</label>
+                            <select class="form-select" name="timeline">
+                                <option value="">Select Timeline</option>
+                                <option value="urgent">Urgent (1-2 weeks)</option>
+                                <option value="standard">Standard (1 month)</option>
+                                <option value="flexible">Flexible (2-3 months)</option>
+                                <option value="ongoing">Ongoing Project</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full">
+                            <label class="form-label">Project Description *</label>
+                            <textarea class="form-textarea" name="message" placeholder="Tell me about your project in detail... What features do you need? What's your game concept? Any specific requirements?" required></textarea>
+                        </div>
+
+                        <button type="submit" class="form-submit">
+                            <span>Send Message</span>
+                        </button>
+                    </form>
+
+                    <div id="formMessage" class="form-message"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">THEKING_1139</div>
+                    <p class="footer-desc">Elite Roblox developer specializing in advanced scripting and modern UI design. Available for commissions, long-term projects, and game consultations. Let's build something amazing together.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Portfolio</h4>
+                    <div class="footer-links">
+                        <a href="#scripting" class="footer-link">Scripting Work</a>
+                        <a href="#ui-design" class="footer-link">UI Design</a>
+                        <a href="#contact" class="footer-link">Hire Me</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <div class="footer-links">
+                        <a href="mailto:shrinivasdhangar62@gmail.com" class="footer-link">Email Me</a>
+                        <span class="footer-link">Discord: theking_1139_48793</span>
+                        <span class="footer-link">Roblox: THEKING_1139</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copy">© 2024 THEKING_1139. All rights reserved.</div>
+                <div class="footer-socials">
+                    <a href="mailto:shrinivasdhangar62@gmail.com" class="social-btn" title="Email">📧</a>
+                    <a href="#" class="social-btn" title="Discord">💬</a>
+                    <a href="#" class="social-btn" title="Roblox">🎮</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll with offset for fixed nav
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    const offset = 100;
+                    const targetPosition = target.offsetTop - offset;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Mouse follow effect on portfolio cards
+        document.querySelectorAll('.portfolio-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.form-submit');
+            const messageDiv = document.getElementById('formMessage');
+            const formData = new FormData(this);
+            
+            // Get form values
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const projectType = formData.get('project_type');
+            const budget = formData.get('budget');
+            const timeline = formData.get('timeline');
+            const message = formData.get('message');
+            
+            // Disable button
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Sending...</span>';
+            
+            // Create detailed email body
+            const emailBody = `
+PROJECT INQUIRY FROM: ${name}
+
+Contact Information:
+- Email: ${email}
+
+Project Details:
+- Type: ${projectType}
+- Budget: ${budget || 'Not specified'}
+- Timeline: ${timeline || 'Not specified'}
+
+Project Description:
+${message}
+
+---
+Sent from THEKING_1139 Portfolio Website
+            `.trim();
+            
+            // Create mailto link
+            const subject = `Project Inquiry - ${projectType}`;
+            const mailtoLink = `mailto:shrinivasdhangar62@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Simulate sending delay for better UX
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            messageDiv.className = 'form-message success';
+            messageDiv.textContent = '✓ Success! Opening your email client... Please send the pre-filled email.';
+            messageDiv.style.display = 'block';
+            
+            // Reset form
+            this.reset();
+            
+            // Hide message after 7 seconds
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 7000);
+            
+            // Re-enable button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<span>Send Message</span>';
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe portfolio cards and info cards
+        document.querySelectorAll('.portfolio-card, .info-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(50px)';
+            el.style.transition = 'opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        });
+
+        // Active nav link on scroll
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const sections = ['scripting', 'ui-design', 'contact'];
+                    let current = '';
+                    
+                    sections.forEach(section => {
+                        const element = document.getElementById(section);
+                        if(element) {
+                            const rect = element.getBoundingClientRect();
+                            if(rect.top <= 200 && rect.bottom >= 200) {
+                                current = section;
+                            }
+                        }
+                    });
+                    
+                    document.querySelectorAll('.nav-item').forEach(link => {
+                        link.classList.remove('active');
+                        if(link.getAttribute('href') === `#${current}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                    
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Add loading state to play buttons
+        document.querySelectorAll('.play-button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.innerHTML = '⏸';
+                setTimeout(() => {
+                    this.innerHTML = '▶';
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
