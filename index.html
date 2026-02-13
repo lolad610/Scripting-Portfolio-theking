@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>theking_1139 | Roblox Systems Developer</title>
+    <meta
+      name="description"
+      content="theking_1139 builds secure, modular, and scalable Roblox systems with production-ready architecture and performance-focused scripting."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="#hero">theking_1139</a>
+        <nav class="nav" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="section hero">
+        <div class="container hero-content reveal">
+          <p class="eyebrow">Roblox Systems Developer</p>
+          <h1>theking_1139</h1>
+          <p class="intro">
+            I build secure, modular, and scalable Roblox systems designed for long-term growth.
+            From backend architecture to in-game UX integration, every solution is engineered for
+            reliability, maintainability, and performance.
+          </p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#projects">View Work</a>
+            <a class="btn btn-secondary" href="#contact">Hire Me</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="section">
+        <div class="container narrow reveal">
+          <h2>About</h2>
+          <p>
+            I specialize in server-side Roblox scripting with a strong focus on secure system
+            design, modular architecture, and stable client-server communication. I build systems
+            that integrate cleanly with UI workflows, enforce validation at critical layers, and
+            remain performant under real gameplay load.
+          </p>
+        </div>
+      </section>
+
+      <section id="projects" class="section">
+        <div class="container reveal">
+          <h2>Projects</h2>
+          <div class="project-grid">
+            <article class="card">
+              <h3>Modular Shop System</h3>
+              <p>
+                A fully modular in-game shop architecture with server-authoritative purchase logic,
+                clean UI hooks, and configurable product definitions for rapid content expansion.
+              </p>
+              <ul>
+                <li>Server-validated purchase pipeline with anti-exploit checks</li>
+                <li>Reusable module structure for item categories and pricing rules</li>
+                <li>Client UI integration with live stock and currency updates</li>
+              </ul>
+              <div class="video-wrap">
+                <iframe
+                  src="about:blank"
+                  title="Modular Shop System Demo"
+                  loading="lazy"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <a class="demo-link" href="#" aria-disabled="true">Demo link coming soon</a>
+            </article>
+
+            <article class="card">
+              <h3>Secure Inventory &amp; Data Persistence</h3>
+              <p>
+                An inventory and save framework built for integrity and fault tolerance using
+                structured DataStore patterns, rollback-safe writes, and robust session handling.
+              </p>
+              <ul>
+                <li>DataStoreService pipeline with retries, queues, and consistency guards</li>
+                <li>Server-owned inventory state with strict remote request validation</li>
+                <li>Session-safe save strategy to reduce data loss on shutdown or reconnect</li>
+              </ul>
+              <div class="video-wrap">
+                <iframe
+                  src="about:blank"
+                  title="Secure Inventory and Data Persistence Demo"
+                  loading="lazy"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <a class="demo-link" href="#" aria-disabled="true">Demo link coming soon</a>
+            </article>
+
+            <article class="card">
+              <h3>Admin Panel with Permission System</h3>
+              <p>
+                A scalable moderation and administration suite with tiered role controls, audited
+                command execution, and secure RemoteFunction/RemoteEvent interaction boundaries.
+              </p>
+              <ul>
+                <li>Role-based permission matrix for command access and action scope</li>
+                <li>Server-side command execution with sanitization and audit logging</li>
+                <li>Extensible command modules for moderation and live operations tooling</li>
+              </ul>
+              <div class="video-wrap">
+                <iframe
+                  src="about:blank"
+                  title="Admin Panel with Permission System Demo"
+                  loading="lazy"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <a class="demo-link" href="#" aria-disabled="true">Demo link coming soon</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section">
+        <div class="container reveal">
+          <h2>Skills</h2>
+          <ul class="skills-grid" aria-label="Skills list">
+            <li>Lua (Roblox)</li>
+            <li>Server Validation</li>
+            <li>RemoteEvents / RemoteFunctions</li>
+            <li>DataStoreService</li>
+            <li>Modular Architecture</li>
+            <li>UI-System Integration</li>
+            <li>Performance Optimization</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <div class="container narrow reveal">
+          <h2>Contact</h2>
+          <ul class="contact-list">
+            <li><span>Discord</span><a href="https://discord.com/users/theking_1139">theking_1139</a></li>
+            <li><span>X</span><a href="https://x.com/theking_1139">x.com/theking_1139</a></li>
+            <li><span>Email</span><a href="mailto:shrinivasdhangar62@gmail.com">shrinivasdhangar62@gmail.com</a></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        },
+        { threshold: 0.16 }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
